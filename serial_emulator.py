@@ -81,6 +81,7 @@ if __name__=='__main__':
             print("This is not the correct string to change the sample rate.")
     else: 
         print("Device type string must be 'gps' or 'imu'. Setting sample time to default 1 second")
+        sample_time = 1
     
     if sample_time > 0: 
         print("Starting", args.device_type, "emulator with sample rate", str(sample_rate), "Hz")
