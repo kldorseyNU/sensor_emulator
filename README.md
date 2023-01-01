@@ -15,7 +15,7 @@ displays help options and gives you the options to run the script.
 
     python serial_emulator.py --file file --sample_time time
 
-For IMU: the sample_time is modifiable by writing to the "registry" using -
+For IMU: the sample_time is modifiable by writing to the "registry" using -V and including the appropriate VectorNav string
 
 file imu-data.txt
 
