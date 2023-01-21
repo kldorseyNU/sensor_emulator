@@ -1,33 +1,38 @@
 # RSN
 
+This serial emulator (and included data files) will behave like two of the sensors we use in EECE 5554. It will write data strings (either NMEA strings or VectorNav strings) to a specified serial port, thus "emulating" the sensor's output. The emulator will help you write drivers and test your publisher nodes without accessing the hardware. This way, we can be as efficient with our use of the actual sensors (GPS pucks, VectorNav units) as possible. 
 
-    Clone the repository Python >= 3.8 tested
+The emulator has been tested with Python 3.8, written by Jagapreet Singh Nir, and updated by Kris Dorsey.
 
-Dependencies: pyserial
+To get the serial emulator, clone this repository with:
+$ git clone.
 
-Do pip install pyserial
+The emulator has a dependency on the pyserial module (https://pypi.org/project/pyserial/), so you will need to first get that by: 
+$ pip install pyserial
 
-Run the following
+After you have cloned the repositor and gotten the pyserial module, you can run the emulator. 
 
-    python serial_emulator.py -h
+$ python3 serial_emulator.py -h 
 
-displays help options and gives you the options to run the script.
+will give you help options to run the script and 
 
-    python serial_emulator.py --file file --sample_time time
+$ python serial_emulator.py --file file --sample_time time
 
-For IMU: the sample_time is modifiable by writing to the "registry" using -V and including the appropriate VectorNav string
+where file is the datafile you want to write to the serial port, and time is the sampling time at which you want to write (in Hz). For example, if I wanted to write the file GPS_Chicago.txt, my command would be 
+
+$ python serial_emulator.py --file GPS_Chicago.txt --sample_time 1
+
+The emulator will write the pseduo device address /dev/pts/N to the terminal. You can use this pseudo-address to test your driver or see output on minicom with 
+    minicom -D /dev/pts/N
+
+where N is the actual number that is printed to the terminal.
+
+%%%%%Information only for VectorNav!%%%%%
+
+The IMU also has a modifiable sampling time that you can use to test out your command for writing a change in sampling time to the sensor's registry. For example: 
+
+$ python serial_emulator.py --file GPS_Chicago.txt -V appropriate-VectorNav-string
 
 file imu-data.txt
 
-For GPS: sample_time is 1 (1 hz) by default
-
-file GPS_Chicago.txt or gps-data-in-building.txt or gps-data.txt
-
-file is a .txt file which you want to send through a pseudo device, sample_time is a positive number from (0,inf). Example Output:
-
-The Pseduo device address: /dev/pts/9
-
-In another terminal, run
-
-    minicom -D /dev/pts/ <slave_id>
 
